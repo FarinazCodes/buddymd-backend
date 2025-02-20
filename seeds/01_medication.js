@@ -7,10 +7,10 @@ export async function seed(knex) {
 
   await knex("medications").insert([
     {
-      user_id: 1,
+      user_id: "some-firebase-uid",
       name: "Vitamin D",
       dosage: "2000",
-      frequency: "1",
+      dosage_unit: "mg",
       start_date: "2025-02-11",
       end_date: "2025-03-01",
     },

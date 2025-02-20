@@ -12,7 +12,11 @@
       .onDelete("CASCADE");
     table.string("name").notNullable();
     table.string("dosage").notNullable();
-    table.string("frequency").notNullable();
+    table
+      .string("dosage_unit")
+      .notNullable()
+      .checkIn(["mg", "mcg", "g", "ml", "%"]);
+    table.time("schedule_time").nullable();
     table.date("start_date").notNullable();
     table.date("end_date").nullable();
   });
