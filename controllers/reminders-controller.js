@@ -3,7 +3,6 @@ import knex from "knex";
 
 const db = knex(knexConfig);
 
-// Create a reminder
 export const addReminder = async (req, res) => {
   const { medication_id, time, delivery_method, phone_number } = req.body;
 
@@ -28,7 +27,6 @@ export const addReminder = async (req, res) => {
   }
 };
 
-// Get all reminders
 export const getReminders = async (req, res) => {
   try {
     const reminders = await db("reminders").select("*");
@@ -40,7 +38,6 @@ export const getReminders = async (req, res) => {
   }
 };
 
-// Delete a reminder
 export const deleteReminder = async (req, res) => {
   const { id } = req.params;
 

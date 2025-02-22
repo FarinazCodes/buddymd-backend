@@ -15,7 +15,7 @@ export const getAllMedications = async (req, res) => {
   }
 
   const user_id = req.user.uid;
-  console.log("✅ Fetching medications for user_id:", user_id);
+  console.log("Fetching medications for user_id:", user_id);
 
   try {
     const medications = await db("medications")
