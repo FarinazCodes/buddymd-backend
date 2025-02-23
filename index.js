@@ -8,6 +8,8 @@ import remindersRoutes from "./routes/reminders-routes.js";
 import "./utils/sendReminders.js";
 import profileRoutes from "./routes/profile-routes.js";
 import adherenceRoutes from "./routes/adherence-routes.js";
+import recipesRoutes from "./routes/recipes-routes.js";
+
 const db = knex(knexConfig);
 
 const app = express();
@@ -20,6 +22,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/reminders", remindersRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/adherence", adherenceRoutes);
-
+app.use("/api/recipes", recipesRoutes);
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
