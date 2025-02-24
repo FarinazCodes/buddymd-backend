@@ -19,37 +19,38 @@ const sendSMS = async (phone_number, message) => {
       from: process.env.TWILIO_PHONE_NUMBER,
       to: phone_number,
     });
-    console.log(` SMS Sent Successfully: ${response.sid}`);
+    console.log(`✅ SMS Sent Successfully: ${response.sid}`);
   } catch (error) {
-    console.error(` Failed to send SMS: ${error.message}`);
+    console.error(`❌ Failed to send SMS: ${error.message}`);
   }
 };
 
 const checkAndSendReminders = async () => {
   try {
-    const currentTime = new Date().toLocaleTimeString("en-US", {
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const now = new Date();
 
-    const currentDate = new Date().toISOString().split("T")[0];
+    // ✅ Ensure we get the correct local date
+    const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+      .toISOString()
+      .split("T")[0];
 
-    console.log(
-      `🔎 Checking reminders for ${currentDate} at ${currentTime}...`
-    );
+    // ✅ Remove seconds to match database format (HH:MM)
+    const currentTime = now.toTimeString().split(":").slice(0, 2).join(":");
 
+    console.log(`🔎 Checking reminders for ${localDate} at ${currentTime}...`);
+
+    // ✅ Ensure time comparison ignores seconds
     const reminders = await db("reminders")
       .join("medications", "reminders.medication_id", "medications.id")
-      .whereRaw("TIME_FORMAT(reminders.time, '%H:%i') = ?", [currentTime])
+      .whereRaw("DATE_FORMAT(reminders.time, '%H:%i') = ?", [currentTime])
       .where((query) => {
         query
           .whereNull("medications.end_date")
-          .orWhere("medications.end_date", ">=", currentDate);
+          .orWhere("medications.end_date", ">=", localDate);
       });
 
     if (reminders.length === 0) {
-      console.log("⏳ No reminders matched this time.");
+      console.log(`⏳ No reminders matched this time (${currentTime}).`);
       return;
     }
 
@@ -64,8 +65,9 @@ const checkAndSendReminders = async () => {
       }
     }
   } catch (error) {
-    console.error(" Error checking reminders:", error);
+    console.error("❌ Error checking reminders:", error);
   }
 };
 
+// ✅ Ensure reminders check every 1 minute
 setInterval(checkAndSendReminders, 60 * 1000);

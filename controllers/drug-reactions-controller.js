@@ -2,7 +2,6 @@ import axios from "axios";
 
 const FDA_API_URL = "https://api.fda.gov/drug/event.json";
 
-// ✅ Fetch Drug Reactions (Common Adverse Effects)
 export const getDrugReactions = async (req, res) => {
   const { drug } = req.query;
 
@@ -13,7 +12,6 @@ export const getDrugReactions = async (req, res) => {
   }
 
   try {
-    // ✅ Query FDA API for patient reactions
     const url = `${FDA_API_URL}?search=patient.drug.medicinalproduct:"${encodeURIComponent(
       drug
     )}"&count=patient.reaction.reactionmeddrapt.exact`;
