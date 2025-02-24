@@ -18,7 +18,6 @@ export const registerUser = async (req, res) => {
     await db("users").insert({
       id: uid,
       email: email || "",
-      display_name: displayName || "",
       photo_url: photoUrl || "",
       phone_number: "",
       created_at: new Date(),
