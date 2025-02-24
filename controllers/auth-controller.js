@@ -5,7 +5,7 @@ const db = knex(knexConfig);
 
 export const registerUser = async (req, res) => {
   try {
-    const { uid, email, displayName, photoUrl } = req.body;
+    const { uid, email, photoUrl } = req.body;
 
     console.log("Registering New User:", { uid, email });
 
@@ -31,5 +31,32 @@ export const registerUser = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error registering user", error: error.message });
+  }
+};
+
+export const verifyUser = async (req, res) => {
+  try {
+    const uid = req.body.uid || req.user?.uid;
+
+    if (!uid) {
+      return res
+        .status(400)
+        .json({ message: "Missing user ID (uid) in request body" });
+    }
+
+    console.log("Verifying User:", uid);
+
+    const user = await db("users").where({ id: uid }).first();
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User verified successfully", user });
+  } catch (error) {
+    console.error("Error Verifying User:", error);
+    res
+      .status(500)
+      .json({ message: "Error verifying user", error: error.message });
   }
 };
