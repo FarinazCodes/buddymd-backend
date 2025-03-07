@@ -1,4 +1,4 @@
-import { admin } from "./firebase.js";
+import { admin } from "./Firebase.js";
 
 export const verifyFirebaseToken = async (req, res, next) => {
   const token = req.headers.authorization?.split("Bearer ")[1];
