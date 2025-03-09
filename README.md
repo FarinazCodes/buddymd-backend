@@ -96,7 +96,7 @@ npm run dev
 
 ## 🔗 Related Repositories
 This project works alongside a frontend service. You can find the frontend code here:
-- **Frontend Repository:** [BuddyMD (Frontend)](https://github.com/FarinazCodes/buddymd-frontend)
+**[BuddyMD Frontend](https://github.com/FarinazCodes/buddymd-frontend)**
 
 ---
 
