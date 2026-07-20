@@ -20,6 +20,7 @@
   "homepage": "https://github.com/FarinazCodes/buddy-md-backend#readme",
   "description": "",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.111.0",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

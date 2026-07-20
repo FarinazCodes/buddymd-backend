@@ -10,6 +10,7 @@ import profileRoutes from "./routes/profile-routes.js";
 import adherenceRoutes from "./routes/adherence-routes.js";
 import recipesRoutes from "./routes/recipes-routes.js";
 import drugReactionsRoutes from "./routes/drug-reactions-routes.js";
+import medGuidanceRoutes from "./routes/med-guidance-routes.js";
 import dotenv from "dotenv";
 const db = knex(knexConfig);
 dotenv.config();
@@ -29,6 +30,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/adherence", adherenceRoutes);
 app.use("/api/recipes", recipesRoutes);
 app.use("/api/drug-reactions", drugReactionsRoutes);
+app.use("/api/med-guidance", medGuidanceRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(` Server running on port ${PORT}`));

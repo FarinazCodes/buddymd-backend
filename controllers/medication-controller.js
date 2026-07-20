@@ -27,7 +27,8 @@ export const getAllMedications = async (req, res) => {
         "dosage_unit",
         "start_date",
         "schedule_time",
-        "end_date"
+        "end_date",
+        "refill_date"
       );
 
     console.log("Fetched Medications:", medications);
@@ -54,7 +55,8 @@ export const getMedicationById = async (req, res) => {
         "dosage_unit",
         "start_date",
         "schedule_time",
-        "end_date"
+        "end_date",
+        "refill_date"
       )
       .first();
 
@@ -80,6 +82,7 @@ export const addMedication = async (req, res) => {
     schedule_time,
     start_date,
     end_date,
+    refill_date,
     phone_number,
   } = req.body;
   const user_id = req.user?.uid;
@@ -109,6 +112,7 @@ export const addMedication = async (req, res) => {
       schedule_time: schedule_time === "" ? null : schedule_time,
       start_date,
       end_date: end_date === "" ? null : end_date,
+      refill_date: refill_date === "" || !refill_date ? null : refill_date,
     });
 
     console.log(" Medication added successfully with ID:", medication_id);
@@ -162,8 +166,15 @@ export const deleteMedication = async (req, res) => {
 export const updateMedication = async (req, res) => {
   const { id } = req.params;
   const user_id = req.user.uid;
-  const { name, dosage, dosage_unit, start_date, schedule_time, end_date } =
-    req.body;
+  const {
+    name,
+    dosage,
+    dosage_unit,
+    start_date,
+    schedule_time,
+    end_date,
+    refill_date,
+  } = req.body;
 
   try {
     const updated = await db("medications").where({ id, user_id }).update({
@@ -173,6 +184,7 @@ export const updateMedication = async (req, res) => {
       start_date,
       schedule_time,
       end_date,
+      refill_date: refill_date === "" || !refill_date ? null : refill_date,
     });
 
     if (!updated) {
